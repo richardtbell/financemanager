@@ -1,0 +1,4 @@
+.venv/
+.hypothesis/
+**/*.log
+**/__pycache__
