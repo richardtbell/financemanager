@@ -1,0 +1,13 @@
+{
+  "name": "finance-manager",
+  "version": "1.0.0",
+  "description" : "Finance manager",
+  "author": "Richard Bell <richard.t.bell90@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
