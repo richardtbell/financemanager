@@ -2,14 +2,16 @@
 
 import React from 'react';
 
-export default class IndexPage extends React.Component {
+class IndexPage extends React.Component {
   render() {
     return (
       <div className="home">
-        <div>
+        <span>
           Hi there
-        </div>
+        </span>
       </div>
     );
   }
 }
+
+export { IndexPage }
