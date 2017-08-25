@@ -5,10 +5,10 @@
   "author": "Richard Bell <richard.t.bell90@gmail.com>",
   "main": "src/server.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node_modules/.bin/babel-node --presets react,es2015 src/server.js",
+    "start": "NODE_ENV=production node_modules/.bin/babel-node --presets react,es2015 src/server.js",
     "start-dev": "npm run start-dev-hmr",
     "start-dev-hmr": "node_modules/.bin/webpack-dev-server --progress --inline --hot --open",
-    "build": "cross-env NODE_ENV=production node_modules/.bin/webpack -p",
+    "build": "webpack",
     "test": "mocha --compilers js:babel-core/register --compilers jsx:babel-core/register --require ./mocha.config.js 'src/**/*[Ss]pec.js'",
     "watch": "npm run test -- --watch"
   },
@@ -24,7 +24,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "~6.26.0",
     "chai": "~4.1.1",
-    "cross-env": "^3.1.4",
     "dev": "~0.1.3",
     "dirty-chai": "^2.0.1",
     "ejs": "^2.5.1",
@@ -32,14 +31,15 @@
     "express": "^4.14.0",
     "http-server": "^0.9.0",
     "jsdom": "^11.1.0",
-    "mocha": "~3.5.0",
+    "mocha": "^3.5.0",
     "react": "^15.3.1",
     "react-addons-test-utils": "~15.6.0",
     "react-dom": "^15.3.1",
-    "react-hot-loader": "^1.3.0",
     "react-router": "^2.6.1",
     "sinon-chai": "^2.13.0",
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.14.1"
+    "webpack": "^3.5.5"
+  },
+  "dependencies": {
+    "moment": "^2.18.1"
   }
 }

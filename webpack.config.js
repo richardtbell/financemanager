@@ -22,11 +22,10 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [{
+    rules: [{
       test: path.join(__dirname, 'src'),
-      loader: ['babel-loader'],
-      query: {
-        cacheDirectory: 'babel_cache',
+      loader: 'babel-loader',
+      options: {
         presets: ['react', 'es2015']
       }
     }]
@@ -43,6 +42,6 @@ module.exports = {
       sourcemap: false,
       beautify: false,
       dead_code: true
-    }),
+    })
   ]
 };

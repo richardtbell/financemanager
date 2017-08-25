@@ -1,13 +1,5 @@
 {
-  "year": 2016,
-  "month": "November",
-  "Income": {
-    "salary": 1000,
-    "other": 200
-    },
-  "Expenses": {
-    "Tax": 200,
-    "National Insurance": 30,
-    "Student Loan": 20
-  }
+  "transactions": [
+
+  ]
 }
