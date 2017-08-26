@@ -4,8 +4,10 @@ import moment from 'moment';
 function renderRow(props) {
     return (
         <tr>
-            <td>{ props.key }</td>
-            { props.values.map(cashFlowValue => <td>{ cashFlowValue }</td>) }
+            <td>{ props.displayName }</td>
+            { props.values.map(cashFlowValue => {
+                return <td>{ cashFlowValue }</td>
+            }) }
         </tr>
     )
 }
@@ -45,9 +47,16 @@ function renderHead(dates) {
 
 function renderBody(cashflowRows) {
     return (
-        <tbody>
-            { cashflowRows.map( renderRow ) }
-        </tbody>
+        cashflowRows.map( cashflowRow => {
+            return (
+                <tbody>
+                    <tr>
+                        <th colSpan={100}>{cashflowRow.displayName}</th>
+                    </tr>
+                    {cashflowRow.values.map(renderRow)}
+                </tbody>
+            )
+        })
     )
 }
 

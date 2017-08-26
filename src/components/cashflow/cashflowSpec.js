@@ -25,30 +25,13 @@ describe('Cashflow', () => {
         expect(shallow(cashflow).find('thead')).to.have.length(1);
     });
 
-    it('renders a tbody', () => {
+    it.skip('renders a tbody', () => {
         const cashflow = React.createElement(Cashflow);
         expect(shallow(cashflow).find('tbody')).to.have.length(1);
     });
 
-    it('renders income and expense for many months', () => {
-        const props = {
-            cashflowRows: [{
-                key: 'Income',
-                values: [1000, 1100, 1200]
-            },{
-                key: 'Expenses',
-                values: [2000, 2100, 2200]
-            }]
-        };
-        const cashflow = React.createElement(Cashflow, props);
-        const rows = shallow(cashflow).find('tbody tr');
-        expect(rows.length).to.equal(2);
-        expectRowToMatch(rows.at(0), ['Income', '1000', '1100', '1200']);
-        expectRowToMatch(rows.at(1), ['Expenses', '2000', '2100', '2200']);
-    });
-
     it('renders years months as the headers', () => {
-        const props = {
+        let props = {
             dates: [
                 "2016-10",
                 "2016-11",
@@ -65,6 +48,42 @@ describe('Cashflow', () => {
         expectHeaderRowToMatch(secondHeadRow, ['', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']);
     });
 
+    it('separates income and recurring expenses', () => {
+        let props = {
+            cashflowRows: [
+                {
+                    displayName: 'Income',
+                    values: [{
+                        displayName: 'Salary',
+                        values: [1200, 1200, 1200]
+                    },{
+                        displayName: 'Other Salary',
+                        values: [2000, 2000, 2000]
+                    }]
+                },{
+                    displayName: 'Recurring Expenses',
+                    values: [
+                        {
+                            displayName: 'Phone',
+                            values: [49.99, 49.99, 49.99]
+                        },{
+                            displayName: 'Rent',
+                            values: [500, 500, 500]
+                        }
+                    ]
+                }
+            ]
+        };
+        const cashflow = React.createElement(Cashflow, props);
+        const sections = shallow(cashflow).find('tbody');
+        expect(sections.length).to.equal(2);
+        expectHeaderRowToMatch(sections.at(0).find('tr').at(0), ['Income']);
+        expectRowToMatch(sections.at(0).find('tr').at(1), ['Salary', '1200', '1200', '1200']);
+        expectRowToMatch(sections.at(0).find('tr').at(2), ['Other Salary', '2000', '2000', '2000']);
+        expectHeaderRowToMatch(sections.at(1).find('tr').at(0), ['Recurring Expenses']);
+        expectRowToMatch(sections.at(1).find('tr').at(1), ['Phone', '49.99', '49.99', '49.99']);
+        expectRowToMatch(sections.at(1).find('tr').at(2), ['Rent', '500', '500', '500']);
+    });
 });
 
 describe('countOccurrences', () => {
@@ -73,6 +92,5 @@ describe('countOccurrences', () => {
         expect(countOccurrences(1, [1,1])).to.equal(2);
         expect(countOccurrences(1, [1,1,0])).to.equal(2);
         expect(countOccurrences(1, [1,1,0,'bob', 1, 10, true, false])).to.equal(3);
-
     });
 });
