@@ -1,18 +1,7 @@
 import React from 'react';
-import {Cashflow, countOccurrences} from './cashflow';
+import { Cashflow, countOccurrences } from './cashflow';
 import { shallow } from 'enzyme';
-
-function expectRowToMatch(row, expectedValues) {
-    expectedValues.forEach((value, index) => {
-        expect(row.find('td').at(index).text()).to.equal(value);
-    })
-};
-
-function expectHeaderRowToMatch(headerRow, expectedHeaders) {
-    expectedHeaders.forEach((value, index) => {
-        expect(headerRow.find('th').at(index).text()).to.equal(value);
-    })
-};
+import { expectRowToMatch, expectHeaderRowToMatch } from '../../test/expectationHelpers'
 
 describe('Cashflow', () => {
     it('renders a table', () => {
@@ -23,11 +12,6 @@ describe('Cashflow', () => {
     it('renders a thead', () => {
         const cashflow = React.createElement(Cashflow);
         expect(shallow(cashflow).find('thead')).to.have.length(1);
-    });
-
-    it.skip('renders a tbody', () => {
-        const cashflow = React.createElement(Cashflow);
-        expect(shallow(cashflow).find('tbody')).to.have.length(1);
     });
 
     it('renders years months as the headers', () => {
