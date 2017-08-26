@@ -10,8 +10,22 @@ function renderRow(props) {
     )
 }
 
-function displayDate(d){
+function getYear(d) {
+    return moment(d, 'YYYY-MM').format("YYYY")
+}
+
+function getMonth(d) {
     return moment(d, 'YYYY-MM').format("MMM")
+}
+
+function countOccurrences(value, array) {
+    return array.reduce( (count, element) => count + (element === value), 0)
+}
+
+function displayYears(dates) {
+    const years = dates.map(date => getYear(date));
+    const uniqueYears = [ ...new Set(years) ];
+    return uniqueYears.map(year => (<th colSpan={countOccurrences(year, years)}>{year}</th>))
 }
 
 function renderHead(dates) {
@@ -19,7 +33,11 @@ function renderHead(dates) {
         <thead>
             <tr>
                 <th></th>
-                { dates.map(date => (<th>{displayDate(date)}</th>)) }
+                { displayYears(dates) }
+            </tr>
+            <tr>
+                <th></th>
+                { dates.map(date => (<th>{getMonth(date)}</th>)) }
             </tr>
         </thead>
     )
@@ -42,4 +60,4 @@ function Cashflow({ cashflowRows = [], dates = [] }){
     );
 }
 
-export default Cashflow
+export {Cashflow, countOccurrences}

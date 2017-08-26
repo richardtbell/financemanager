@@ -1,5 +1,5 @@
 import React from 'react';
-import Cashflow from './cashflow';
+import {Cashflow, countOccurrences} from './cashflow';
 import { shallow } from 'enzyme';
 
 function expectRowToMatch(row, expectedValues) {
@@ -30,19 +30,6 @@ describe('Cashflow', () => {
         expect(shallow(cashflow).find('tbody')).to.have.length(1);
     });
 
-    it('renders months as the headers', () => {
-        const props = {
-            dates: [
-                "2017-01",
-                "2017-02",
-                "2017-03"
-            ]
-        };
-        const cashflow = React.createElement(Cashflow, props);
-        const firstHeadRow = shallow(cashflow).find('thead tr').at(0);
-        expectHeaderRowToMatch(firstHeadRow, ['', 'Jan', 'Feb', 'Mar']);
-    });
-
     it('renders income and expense for many months', () => {
         const props = {
             cashflowRows: [{
@@ -60,4 +47,32 @@ describe('Cashflow', () => {
         expectRowToMatch(rows.at(1), ['Expenses', '2000', '2100', '2200']);
     });
 
+    it('renders years months as the headers', () => {
+        const props = {
+            dates: [
+                "2016-10",
+                "2016-11",
+                "2016-12",
+                "2017-01",
+                "2017-02",
+                "2017-03"
+            ]
+        };
+        const cashflow = React.createElement(Cashflow, props);
+        const firstHeadRow = shallow(cashflow).find('thead tr').at(0);
+        const secondHeadRow = shallow(cashflow).find('thead tr').at(1);
+        expectHeaderRowToMatch(firstHeadRow, ['', '2016', '2017']);
+        expectHeaderRowToMatch(secondHeadRow, ['', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar']);
+    });
+
+});
+
+describe('countOccurrences', () => {
+    it('counts the number of times a value appears in an array', () => {
+        expect(countOccurrences(1, [1])).to.equal(1);
+        expect(countOccurrences(1, [1,1])).to.equal(2);
+        expect(countOccurrences(1, [1,1,0])).to.equal(2);
+        expect(countOccurrences(1, [1,1,0,'bob', 1, 10, true, false])).to.equal(3);
+
+    });
 });
