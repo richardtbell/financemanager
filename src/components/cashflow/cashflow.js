@@ -1,5 +1,20 @@
 import React from 'react';
 import moment from 'moment';
+import {countOccurrences} from '../../utils/countOccurances'
+
+function getYear(d) {
+    return moment(d, 'YYYY-MM').format("YYYY")
+}
+
+function getMonth(d) {
+    return moment(d, 'YYYY-MM').format("MMM")
+}
+
+function displayYears(dates) {
+    const years = dates.map(date => getYear(date));
+    const uniqueYears = [ ...new Set(years) ];
+    return uniqueYears.map(year => (<th colSpan={countOccurrences(year, years)}>{year}</th>))
+}
 
 function renderRow(props) {
     return (
@@ -10,24 +25,6 @@ function renderRow(props) {
             }) }
         </tr>
     )
-}
-
-function getYear(d) {
-    return moment(d, 'YYYY-MM').format("YYYY")
-}
-
-function getMonth(d) {
-    return moment(d, 'YYYY-MM').format("MMM")
-}
-
-function countOccurrences(value, array) {
-    return array.reduce( (count, element) => count + (element === value), 0)
-}
-
-function displayYears(dates) {
-    const years = dates.map(date => getYear(date));
-    const uniqueYears = [ ...new Set(years) ];
-    return uniqueYears.map(year => (<th colSpan={countOccurrences(year, years)}>{year}</th>))
 }
 
 function renderHead(dates) {
